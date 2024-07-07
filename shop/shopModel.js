@@ -1,5 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
+import { product } from "../product/productModel.js";
+
 const shop = new Schema(
   {
     shopName: {
@@ -39,6 +41,7 @@ const shop = new Schema(
       type: Schema.Types.ObjectId,
       ref: "user",
     },
+    products: [product],
   },
   { versionKey: false }
 );
