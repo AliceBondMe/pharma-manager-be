@@ -26,7 +26,13 @@ const registerUser = async ({ name, email, phone, password }) => {
     id: newUser._id,
   };
 
-  return { name, email, phone };
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+  await User.findByIdAndUpdate(newUser._id, { token });
+
+  newUser.token = token;
+  newUser.password = undefined;
+
+  return newUser;
 };
 
 const loginUser = async ({ email, password }) => {

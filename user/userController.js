@@ -5,7 +5,7 @@ const registerUser = async (req, res) => {
   const { name, email, phone, password } = req.body;
   const user = await userService.registerUser({ name, email, phone, password });
 
-  res.status(201).json({ user: { name, email, phone } });
+  res.status(201).json({ user });
 };
 
 const loginUser = async (req, res) => {
@@ -27,8 +27,8 @@ const logoutUser = async (req, res) => {
 };
 
 const refreshUser = async (req, res) => {
-  const { name, email } = req.user;
-  res.status(200).json({ name, email });
+  const { name, email, phone } = req.user;
+  res.status(200).json({user: { name, email, phone }});
 };
 
 export default {
