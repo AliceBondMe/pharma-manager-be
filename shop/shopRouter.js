@@ -16,6 +16,8 @@ shopRouter.post(
   shopController.createShop
 );
 
+shopRouter.get("/", authenticate, shopController.getShops);
+
 shopRouter.get("/:id", authenticate, checkId, shopController.getOneShop);
 
 shopRouter.put(
@@ -25,6 +27,8 @@ shopRouter.put(
   validateBody(shopSchema),
   shopController.updateShop
 );
+
+shopRouter.delete("/:id", authenticate, checkId, shopController.deleteShop);
 
 shopRouter.post(
   "/:id/product/add",

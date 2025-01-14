@@ -8,6 +8,13 @@ const createShop = async (shopInfo, owner) => {
   return shopToAdd;
 };
 
+const getShopsByOwner = async (owner) => {
+  const shops = await Shop.find().where("owner").equals(owner);
+
+  if (!shops) throw HttpError(404);
+  return shops;
+};
+
 const getOneShop = async (id, owner) => {
   const shop = await Shop.findById(id).where("owner").equals(owner);
 
@@ -24,6 +31,15 @@ const updateShop = async (id, owner, updates) => {
 
   if (!updatedShop) throw HttpError(404);
   return updatedShop;
+};
+
+const deleteShop = async (id, owner) => {
+  const deletedShop = await Shop.findByIdAndDelete(id)
+    .where("owner")
+    .equals(owner);
+
+  if (!deletedShop) throw HttpError(404);
+  return;
 };
 
 const addProduct = async (id, owner, newProduct) => {
@@ -122,8 +138,10 @@ const deleteProductById = async (shopId, productId, owner) => {
 
 export default {
   createShop,
+  getShopsByOwner,
   getOneShop,
   updateShop,
+  deleteShop,
   addProduct,
   addProductById,
   editProductById,

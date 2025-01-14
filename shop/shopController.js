@@ -7,6 +7,14 @@ const createShop = async (req, res) => {
   res.status(201).json(shop);
 };
 
+const getShops = async (req, res) => {
+  const { _id: owner } = req.user;
+
+  const shop = await shopService.getShopsByOwner(owner);
+
+  res.status(200).json(shop);
+};
+
 const getOneShop = async (req, res) => {
   const { id } = req.params;
   const { _id: owner } = req.user;
@@ -14,6 +22,15 @@ const getOneShop = async (req, res) => {
   const shop = await shopService.getOneShop(id, owner);
 
   res.status(200).json(shop);
+};
+
+const deleteShop = async (req, res) => {
+  const { id } = req.params;
+  const { _id: owner } = req.user;
+
+  const shop = await shopService.deleteShop(id, owner);
+
+  res.status(200).json({ message: "Shop deleted succesfully" });
 };
 
 const updateShop = async (req, res) => {
@@ -71,8 +88,10 @@ const deleteProductById = async (req, res) => {
 
 export default {
   createShop: trycatch(createShop),
+  getShops: trycatch(getShops),
   getOneShop: trycatch(getOneShop),
   updateShop: trycatch(updateShop),
+  deleteShop: trycatch(deleteShop),
   addProduct: trycatch(addProduct),
   addProductById: trycatch(addProductById),
   editProductById: trycatch(editProductById),
